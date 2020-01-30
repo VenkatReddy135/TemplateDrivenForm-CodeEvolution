@@ -1,0 +1,48 @@
+<div class="container">
+  <h1  style="color:green;text-align:center"><i><u>TEMPLATE-DRIVEN-FORMS</u></i></h1>
+  <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm.value);userForm.reset()">
+    <!-- {{userForm.value|json}}<br>
+    {{userModel|json}} <br> -->
+  <div class="form-group">
+<label style="color:brown">USERNAME:-</label>
+<input type="text" name="userName" required [class.is-invalid]="name.invalid && name.touched" #name="ngModel" [(ngModel)]="userModel.name" class="form-control">
+  <small class="text-danger" [class.d-none]="name.valid||name.untouched">Name is required</small>
+</div>
+  <div class="form-group">
+<label style="color:brown">EMAIL:-</label>
+<input type="email" name="email"   required [(ngModel)]="userModel.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [class.is-invalid]="email.invalid && email.touched" #email="ngModel"  class="form-control">
+  <small class="text-danger" [class.d-none]="email.valid||email.untouched">Email should be valid</small>
+</div>
+  <div class="form-group">
+    <label style="color:brown">PHONE NUMBER:-</label>
+<input type="tel" required name="phoneNumber" pattern="^\d{10}$" [class.is-invalid]="phone.invalid && phone.touched" #phone="ngModel" [(ngModel)]="userModel.phoneNumber" class="form-control">
+  <small class="text-danger" [class.d-none]="phone.valid||phone.untouched">Phone number should be 10 digits</small>
+   <!-- <div *ngIf="phone.errors && (phone.invalid||phone.touched)">
+    <small class="text-danger" *ngIf="phone.errors.required">Phone number is required</small>
+    <small class="text-danger" *ngIf="phone.errors.pattern">Phone number should be 10 digits</small>
+  </div> -->
+</div>
+
+  <div class="form-group">
+    <label style="color:brown">SeleCt-TOpic:-</label>
+    <select (blur)="validateTopic(topic.value)" (change)="validateTopic(topic.value)" [class.is-invalid]="topicHasError && topic.touched" #topic="ngModel" class="custom-select"  name="topic" [(ngModel)]="userModel.topic" >
+      <option value="default">----select---</option>
+       <option *ngFor="let topic of topics">{{topic}}</option>
+    </select>
+    <small class="text-danger" [class.d-none]="!topicHasError||topic.untouched">Choose a topic</small>
+  </div>
+  <div class="form-check mb-3">
+    <input type="radio" class="form-check-input" required name="timePreference" [(ngModel)]="userModel.timePreference" name="time preference" value="morning">
+    <label class="form-check-label">Morning(8am-12pm)</label><br>
+    <input type="radio" class="form-check-input" required name="timePreference" [(ngModel)]="userModel.timePreference" name="time preference" value="evening">
+   <label class="form-check-label">Evening(5pm-9pm)</label>
+  </div>
+  <div class="form-group">
+    <input type="form-check-input" name="subscribe" required [(ngModel)]="userModel.subscribe" type="checkbox">
+    <label class="form-check-label">send me promotional offers</label>
+  </div>
+  <button class="btn btn-danger" [disabled]="userForm.form.invalid||topicHasError">submit</button>
+
+</form>
+</div>
+
